@@ -1451,7 +1451,11 @@ function pauseGame() {
 				pause = 1;
 				document.body.classList.add('pause')
 	}
+	
+	
 }
+
+let playing = 0;
 
 document.addEventListener('keydown', function(event) {
 		//alert(event.code)
@@ -1490,31 +1494,41 @@ document.addEventListener('keydown', function(event) {
 			pauseGame()
 		}
 		
-		if (event.code == 'Numpad9') {
+		if (event.code == 'PageUp') {
 			selectTopDisplay(true);
         }
-		if (event.code == 'Numpad6') {
+		if (event.code == 'PageDown') {
 			selectTopDisplay(false);
         }
-		if (event.code == 'NumpadAdd') {
+		if (event.code == 'Delete') {
 			//oleg2 
-			if (!proceedSucc) {
-				if (!proceed) {
-					proceed = 1;
-					dashspeed()
-					setTimeout(function() { proceed = 0; dashspeed() }, 5000)
-					
+			if (currentDisplay != 3) {
+				if (!proceedSucc) {
+					if (!proceed) {
+						proceed = 1;
+						dashspeed()
+						setTimeout(function() { proceed = 0; dashspeed() }, 5000)
+						
+					} else {
+						
+						proceed = 0; 
+						proceedSucc = 1;
+						myСonsumptionFull = 0
+						myOdo = 0 - myMeters
+						setTimeout(function() { proceedSucc = 0; dashspeed() }, 1000)
+						dashspeed()
+					}
 				} else {
-					
-					proceed = 0; 
-					proceedSucc = 1;
-					myСonsumptionFull = 0
-					myOdo = 0 - myMeters
-					setTimeout(function() { proceedSucc = 0; dashspeed() }, 1000)
-					dashspeed()
+					proceedSucc = 0; dashspeed()
 				}
 			} else {
-				proceedSucc = 0; dashspeed()
+				if (!playing) {
+					document.getElementById('radio').play()
+					playing = 1
+				} else { 
+					document.getElementById('radio').pause()
+					playing = 0
+				}
 			}
         }
 		
